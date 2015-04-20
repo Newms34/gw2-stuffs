@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div id='container' ng-app='gw2pricer' ng-controller='gw2Controller'>
+        <table class='table table-striped'>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Item Name</th>
+                    <th>ID</th>
+                    <th>Price</th>
+                    <th>Upgrade</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat='item in priceFull'>
+                    <td><img src='{{item.pic}}' class='itemIcon'/></td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.itId}}</td>
+                    <td>{{item.price|gw2Currency}}</td>
+                    <td ng-if='item.isCore!="none"' ng-class='(item.upg>0)?"doUpg":"dontUpg"'>{{item.upg}}</td>
+                    <td ng-if='item.isCore=="none"'>N/A</td>
+                </tr>
+            </tbody>
+        </table>
+        <button ng-click='refreshPrices();'>Refresh Price List</button>
+        <br/>
+        <button ng-click='alertMe(priceFull);'>Price Full</button>
+    </div>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="./controllers/priceCalc.js"></script>
+</body>
+
+</html>
