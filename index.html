@@ -16,6 +16,7 @@
                     <th>Item Name</th>
                     <th>ID</th>
                     <th>Price</th>
+                    <th>GW2 Spidy Link</th>
                     <th>Upgrade</th>
                 </tr>
             </thead>
@@ -25,6 +26,7 @@
                     <td>{{item.name}}</td>
                     <td>{{item.itId}}</td>
                     <td>{{item.price|gw2Currency}}</td>
+                    <td><a href='http://www.gw2spidy.com/item/{{item.itId}}' target='_blank'>Click!</a></td>
                     <td ng-if='item.isCore!="none"' ng-class='(item.upg>0)?"doUpg":"dontUpg"'>{{item.upg}}</td>
                     <td ng-if='item.isCore=="none"'>N/A</td>
                 </tr>
