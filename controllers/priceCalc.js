@@ -60,15 +60,15 @@ app.controller("gw2Controller", function($scope, $filter, $q) {
         console.log($scope.priceFull)
     }
     $scope.recipeList = [];
-    $scope.loading=false;
-    $scope.whichQuag='';
+    $scope.loading = false;
+    $scope.whichQuag = '';
+    var quag = ["aloha", "attack", "bear", "bowl", "box", "breakfast", "bubble", "cake", "cheer", "coffee", "cow", "cry", "elf", "ghost", "girl", "hat", "helmut", "hoodie-down", "hoodie-up", "killerwhale", "knight", "lollipop", "lost", "moving", "party", "present", "quaggan", "rain", "scifi", "seahawks", "sleep", "summer", "vacation"]
+    $.get('https://api.guildwars2.com/v2/quaggans/' + quag[Math.floor(Math.random() * quag.length)], function(theQuag) {
+        $scope.whichQuag = theQuag.url;
+    })
     $scope.getRecipes = function(item) {
-        var quag = [ "aloha", "attack", "bear", "bowl", "box", "breakfast", "bubble", "cake", "cheer", "coffee", "cow", "cry", "elf", "ghost", "girl", "hat", "helmut", "hoodie-down", "hoodie-up", "killerwhale", "knight", "lollipop", "lost", "moving", "party", "present", "quaggan", "rain", "scifi", "seahawks", "sleep", "summer", "vacation"]
-        $.get('https://api.guildwars2.com/v2/quaggans/'+quag[Math.floor(Math.random()*quag.length)],function(theQuag){
-            $scope.whichQuag=theQuag.url;
-        })
         $scope.recipeList = [];
-        $scope.loading=true;
+        $scope.loading = true;
         $scope.recipeShow = true;
         $scope.currItem = item;
         //now, get list of recipes from gw2 APi
@@ -115,10 +115,13 @@ app.controller("gw2Controller", function($scope, $filter, $q) {
                                     price: theItem.sells.unit_price,
                                     quantity: quant,
                                     name: finalRecip.name,
-                                    prof:theItem.sells.unit_price - (quant*item.price)
+                                    prof: theItem.sells.unit_price - (quant * item.price)
                                 })
-                                if ($scope.recipeList.length==itemRecipePrices.length){
-                                    $scope.loading=false;
+                                if ($scope.recipeList.length == itemRecipePrices.length) {
+                                    $scope.loading = false;
+                                    $.get('https://api.guildwars2.com/v2/quaggans/' + quag[Math.floor(Math.random() * quag.length)], function(theQuag) {
+                                        $scope.whichQuag = theQuag.url;
+                                    })
                                 }
                                 $scope.$digest();
                             })
@@ -132,6 +135,12 @@ app.controller("gw2Controller", function($scope, $filter, $q) {
             })
         })
     };
+    $('#recipePanel').scroll(function(e){
+        if($scope.loading){
+            //ayy, u! no scrollin!
+            $(this).scrollTop(0);
+        }
+    });
     $scope.quanFilt = function(itemQuant) {
         console.log(itemQuant, typeof itemQuant, $scope.quantLim, typeof $scope.quantLim)
         if (itemQuant <= $scope.quantLim) {
@@ -145,8 +154,8 @@ app.controller("gw2Controller", function($scope, $filter, $q) {
             // containment: [0, 0, $(document).width() / 2, $(document).height() / 2]
         });
     });
-    $scope.sort='name';
-    $scope.reverse=false;
+    $scope.sort = 'name';
+    $scope.reverse = false;
     $scope.sortRec = function(value) {
         if ($scope.sort == value) {
             $scope.reverse = !$scope.reverse;
