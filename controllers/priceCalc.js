@@ -108,8 +108,10 @@ app.controller("gw2Controller", function($scope, $filter, $q) {
                                 $scope.recipeList.push({
                                     price: theItem.sells.unit_price,
                                     quantity: quant,
-                                    name: finalRecip.name
+                                    name: finalRecip.name,
+                                    prof:theItem.sells.unit_price - (quant*item.price)
                                 })
+                                console.log('original item:',item)
                                 $scope.$digest();
                             })
                         })

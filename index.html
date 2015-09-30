@@ -48,6 +48,7 @@
                             <th class='info sortBut' ng-click='sortRec("name");'>Recipe Produces <span ng-if='sort=="name" && reverse'>&#9650;</span><span ng-if='sort=="name" && !reverse'>&#9660;</span></th>
                             <th class='info sortBut' ng-click='sortRec("price");'>Price <span ng-if='sort=="price" && reverse'>&#9650;</span><span ng-if='sort=="price" && !reverse'>&#9660;</span></th>
                             <th class='info sortBut' ng-click='sortRec("quantity");'>Quantity Required <span ng-if='sort=="quantity" && reverse'>&#9650;</span><span ng-if='sort=="quantity" && !reverse'>&#9660;</span></th>
+                            <th class='info sortBut' ng-click='sortRec("prof");'>Profit (ignoring other item costs)<span ng-if='sort=="prof" && reverse'>&#9650;</span><span ng-if='sort=="prof" && !reverse'>&#9660;</span></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -55,6 +56,7 @@
                             <td>{{recip.name}}</td>
                             <td>{{recip.price|gw2Currency}}</td>
                             <td>{{recip.quantity}}</td>
+                            <td>{{recip.prof|gw2Currency}}</td>
                         </tr>
                     </tbody>
                 </table>
