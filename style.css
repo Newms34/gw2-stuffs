@@ -12,6 +12,19 @@ table{
 	background-color: #fcc;
 }
 .itemIcon{
-	height:40px;
-	width:40px;
+	height:60px;
+	width:60px;
+}
+#recipePanel{
+	position:fixed;
+	left:15%;
+	top:100px;
+}
+#recipePanel:hover{
+	box-shadow:1px 1px 6px #000;
+	max-height:90vh;
+	overflow:scroll;
+}
+.sortBut{
+	cursor:pointer;
 }
