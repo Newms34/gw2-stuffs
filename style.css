@@ -1,30 +1,64 @@
-html,body{
-	width:100%;
-	height:100%;
+html,
+body {
+    width: 100%;
+    height: 100%;
+    background: -webkit-linear-gradient(rgba(255, 255, 255, 0.85), rgba(255,255,255, 0.85)), url('./gw315.jpg');
+    background: -moz-linear-gradient(rgba(255, 255, 255, 0.85), rgba(255,255,255, 0.85)), url('./gw315.jpg');
+    background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255,255,255, 0.85)), url('./gw315.jpg');
+    background-size:contain;
+    background-attachment: fixed;
 }
-table{
-	width:90%;
+
+table {
+    width: 90%;
 }
-.doUpg{
-	background-color: #cfc;
+
+.doUpg {
+    background-color: #cfc;
 }
-.dontUpg{
-	background-color: #fcc;
+
+.dontUpg {
+    background-color: #fcc;
 }
-.itemIcon{
-	height:60px;
-	width:60px;
+
+.itemIcon {
+    height: 60px;
+    width: 60px;
 }
-#recipePanel{
-	position:fixed;
-	left:15%;
-	top:100px;
+
+#recipePanel {
+    position: fixed;
+    left: 15%;
+    top: 100px;
 }
-#recipePanel:hover{
-	box-shadow:1px 1px 6px #000;
-	max-height:90vh;
-	overflow:scroll;
+
+#recipePanel:hover {
+    box-shadow: 1px 1px 6px #000;
+    max-height: 90vh;
+    overflow: scroll;
 }
-.sortBut{
-	cursor:pointer;
+
+.sortBut {
+    cursor: pointer;
+}
+
+#loader {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .5);
+    font-size: 48pt;
+    color: #fff;
+    text-align: center;
+}
+
+#quag-load {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20%;
+    width: 500px;
+    height: 500px;
 }

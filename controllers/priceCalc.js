@@ -60,9 +60,15 @@ app.controller("gw2Controller", function($scope, $filter, $q) {
         console.log($scope.priceFull)
     }
     $scope.recipeList = [];
+    $scope.loading=false;
+    $scope.whichQuag='';
     $scope.getRecipes = function(item) {
+        var quag = [ "aloha", "attack", "bear", "bowl", "box", "breakfast", "bubble", "cake", "cheer", "coffee", "cow", "cry", "elf", "ghost", "girl", "hat", "helmut", "hoodie-down", "hoodie-up", "killerwhale", "knight", "lollipop", "lost", "moving", "party", "present", "quaggan", "rain", "scifi", "seahawks", "sleep", "summer", "vacation"]
+        $.get('https://api.guildwars2.com/v2/quaggans/'+quag[Math.floor(Math.random()*quag.length)],function(theQuag){
+            $scope.whichQuag=theQuag.url;
+        })
         $scope.recipeList = [];
-        console.log(item);
+        $scope.loading=true;
         $scope.recipeShow = true;
         $scope.currItem = item;
         //now, get list of recipes from gw2 APi
@@ -111,7 +117,9 @@ app.controller("gw2Controller", function($scope, $filter, $q) {
                                     name: finalRecip.name,
                                     prof:theItem.sells.unit_price - (quant*item.price)
                                 })
-                                console.log('original item:',item)
+                                if ($scope.recipeList.length==itemRecipePrices.length){
+                                    $scope.loading=false;
+                                }
                                 $scope.$digest();
                             })
                         })
