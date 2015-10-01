@@ -35,23 +35,25 @@ app.controller("gw2Controller", function($scope, $filter, $q) {
                     pic: ''
                 };
             })
-            $.getJSON('https://api.guildwars2.com/v2/items?ids=24329,24330,24324,24325,24339,24340,24334,24335,24304,24305,24309,24310,24314,24315,24319,24320', function(data) {
-                data.forEach(function(el) {
-                    priceObj[el.id].name = el.name;
-                    priceObj[el.id].pic = el.icon;
-                    if (el.name.indexOf('Core') != -1 || el.name.indexOf('Vile') != -1) {
-                        //item is a core, so calc upg cost
-                        var upgCost = 2504 + (2 * priceObj[el.id].price) + 1792; //cost of upgrading
-                        var upgProf = priceObj[el.id + 1].price - upgCost;
-                        priceObj[el.id].upg = upgProf;
-                    } else {
-                        priceObj[el.id].isCore = 'none';
-                    }
-                })
-                angular.copy(priceObj, $scope.priceFull);
-                $scope.$apply();
+            $.get('https://api.guildwars2.com/v2/commerce/prices?ids=24277', function(dustPrice) {
+                $.getJSON('https://api.guildwars2.com/v2/items?ids=24329,24330,24324,24325,24339,24340,24334,24335,24304,24305,24309,24310,24314,24315,24319,24320', function(data) {
+                    data.forEach(function(el) {
+                        priceObj[el.id].name = el.name;
+                        priceObj[el.id].pic = el.icon;
+                        if (el.name.indexOf('Core') != -1 || el.name.indexOf('Vile') != -1) {
+                            //item is a core, so calc upg cost
+                            var upgCost = 2504 + (2 * priceObj[el.id].price) + dustPrice[0].sells.unit_price; //cost of upgrading
+                            var upgProf = priceObj[el.id + 1].price - upgCost;
+                            priceObj[el.id].upg = upgProf;
+                        } else {
+                            priceObj[el.id].isCore = 'none';
+                        }
+                    })
+                    angular.copy(priceObj, $scope.priceFull);
+                    $scope.$apply();
 
-            });
+                });
+            })
         })
     }
     $scope.refreshPrices();
@@ -122,7 +124,7 @@ app.controller("gw2Controller", function($scope, $filter, $q) {
                                 currPerc = 100 * ($scope.recipeList.length / itemRecipePrices.length);
                                 $('#loadBarPerc').css({
                                     'width': currPerc + '%',
-                                    'background-color': 'hsl(0,100%,'+currPerc/2+'%)'
+                                    'background-color': 'hsl(0,100%,' + currPerc / 2 + '%)'
                                 });
 
                                 if ($scope.recipeList.length == itemRecipePrices.length) {
