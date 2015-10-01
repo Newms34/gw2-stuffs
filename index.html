@@ -60,7 +60,12 @@
                         </tr>
                     </tbody>
                 </table>
-                <div id='loader' ng-show='loading'>Loading! Please wait.<br/><img id='quag-load' src='{{whichQuag}}'/></div>
+                <div id='loader' ng-show='loading'>Loading! Please wait.
+                    <br/>
+                    <div id='loadBar'>
+                        <div id='loadBarPerc'></div>
+                    </div>
+                    <br/><img id='quag-load' src='{{whichQuag}}' /></div>
             </div>
         </div>
     </div>

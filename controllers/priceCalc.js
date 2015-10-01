@@ -70,6 +70,8 @@ app.controller("gw2Controller", function($scope, $filter, $q) {
         $scope.loading = true;
         $scope.recipeShow = true;
         $scope.currItem = item;
+        var currPerc = 0;
+        $('#loadBarPerc').css('width', '0%');
         //now, get list of recipes from gw2 APi
         $.get('https://api.guildwars2.com/v2/recipes/search?input=' + item.itId, function(res) {
             var promList = [];
@@ -108,14 +110,21 @@ app.controller("gw2Controller", function($scope, $filter, $q) {
                                 }
                             }
                             $.get('https://api.guildwars2.com/v2/items/' + recipes[whichRecipe].output_item_id, function(finalRecip) {
-                                console.log('final recip',finalRecip);
+                                console.log('final recip', finalRecip);
                                 $scope.recipeList.push({
-                                    price: theItem.sells.unit_price,
-                                    quantity: quant,
-                                    name: finalRecip.name,
-                                    prof: theItem.sells.unit_price - (quant * item.price),
-                                    id:finalRecip.id
-                                })
+                                        price: theItem.sells.unit_price,
+                                        quantity: quant,
+                                        name: finalRecip.name,
+                                        prof: theItem.sells.unit_price - (quant * item.price),
+                                        id: finalRecip.id
+                                    })
+                                    //bar percent
+                                currPerc = 100 * ($scope.recipeList.length / itemRecipePrices.length);
+                                $('#loadBarPerc').css({
+                                    'width': currPerc + '%',
+                                    'background-color': 'hsl(0,100%,'+currPerc/2+'%)'
+                                });
+
                                 if ($scope.recipeList.length == itemRecipePrices.length) {
                                     $scope.loading = false;
                                     $.get('https://api.guildwars2.com/v2/quaggans/' + quag[Math.floor(Math.random() * quag.length)], function(theQuag) {
@@ -134,8 +143,8 @@ app.controller("gw2Controller", function($scope, $filter, $q) {
             })
         })
     };
-    $('#recipePanel').scroll(function(e){
-        if($scope.loading){
+    $('#recipePanel').scroll(function(e) {
+        if ($scope.loading) {
             //ayy, u! no scrollin!
             $(this).scrollTop(0);
         }

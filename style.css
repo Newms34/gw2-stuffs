@@ -40,6 +40,7 @@ table {
 
 .sortBut {
     cursor: pointer;
+    transition-duration:.5s;
 }
 
 #loader {
@@ -64,4 +65,17 @@ table {
 }
 .orderSel{
 	background-color:#ccf!important;
+}
+#loadBar{
+	width:66%;
+	height:20px;
+	margin-left:auto;
+	margin-right:auto;
+	border:2px inset #555;
+}
+#loadBarPerc{
+	background-color: #CE0000;
+	height:20px;
+	position:relative;
+	left:0px;
 }
