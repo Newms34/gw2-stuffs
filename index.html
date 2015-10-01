@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title></title>
+    <title>Guild Wars 2 Lodestone/Core Pricing</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
     <link rel="stylesheet" href="./style.css" />
 </head>
@@ -40,15 +40,15 @@
                 <div class='btn btn-danger pull-right' ng-click='recipeShow=false'>X</div>
             </div>
             <div class='panel-body'>
-                <label for='quantLimit'>Limit number of required items to: </label>{{quantLim}}
+                <label for='quantLimit'>Limit number of required {{currItem.name}}s to: </label>{{quantLim}}
                 <input type='range' id='quantLimit' min='1' max='500' ng-model='quantLim' />
                 <table class='table table-striped'>
                     <thead>
                         <tr>
-                            <th class='info sortBut' ng-click='sortRec("name");'>Recipe Produces <span ng-if='sort=="name" && reverse'>&#9650;</span><span ng-if='sort=="name" && !reverse'>&#9660;</span></th>
-                            <th class='info sortBut' ng-click='sortRec("price");'>Price <span ng-if='sort=="price" && reverse'>&#9650;</span><span ng-if='sort=="price" && !reverse'>&#9660;</span></th>
-                            <th class='info sortBut' ng-click='sortRec("quantity");'>Quantity Required <span ng-if='sort=="quantity" && reverse'>&#9650;</span><span ng-if='sort=="quantity" && !reverse'>&#9660;</span></th>
-                            <th class='info sortBut' ng-click='sortRec("prof");'>Profit (ignoring other item costs)<span ng-if='sort=="prof" && reverse'>&#9650;</span><span ng-if='sort=="prof" && !reverse'>&#9660;</span></th>
+                            <th class='info sortBut' ng-click='sortRec("name");' ng-class='{orderSel:sort=="name"}'>Recipe Produces <span ng-if='sort=="name" && reverse'>&#9650;</span><span ng-if='sort=="name" && !reverse'>&#9660;</span></th>
+                            <th class='info sortBut' ng-click='sortRec("price");' ng-class='{orderSel:sort=="price"}'>Price <span ng-if='sort=="price" && reverse'>&#9650;</span><span ng-if='sort=="price" && !reverse'>&#9660;</span></th>
+                            <th class='info sortBut' ng-click='sortRec("quantity");' ng-class='{orderSel:sort=="quantity"}'>{{currItem.name}}s Required <span ng-if='sort=="quantity" && reverse'>&#9650;</span><span ng-if='sort=="quantity" && !reverse'>&#9660;</span></th>
+                            <th class='info sortBut' ng-click='sortRec("prof");' ng-class='{orderSel:sort=="prof"}'>Profit (ignoring other item costs)<span ng-if='sort=="prof" && reverse'>&#9650;</span><span ng-if='sort=="prof" && !reverse'>&#9660;</span></th>
                         </tr>
                     </thead>
                     <tbody>
