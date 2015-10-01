@@ -48,7 +48,6 @@ app.controller("gw2Controller", function($scope, $filter, $q) {
                         priceObj[el.id].isCore = 'none';
                     }
                 })
-                console.log('From factory: ', priceObj)
                 angular.copy(priceObj, $scope.priceFull);
                 $scope.$apply();
 
@@ -79,7 +78,6 @@ app.controller("gw2Controller", function($scope, $filter, $q) {
             });
             $q.all(promList).then(function(recipes) {
                 var recipeString = '';
-                console.log('recipes', recipes)
                 recipes.forEach(function(priceItem) {
                     recipeString += priceItem.output_item_id + ',';
                 })
@@ -94,7 +92,6 @@ app.controller("gw2Controller", function($scope, $filter, $q) {
                             return 0;
                         }
                     });
-                    console.log('item recipe prices', itemRecipePrices)
                     itemRecipePrices.forEach(function(theItem) {
                             var quant = 0;
                             var whichRecipe = 0;
@@ -111,11 +108,13 @@ app.controller("gw2Controller", function($scope, $filter, $q) {
                                 }
                             }
                             $.get('https://api.guildwars2.com/v2/items/' + recipes[whichRecipe].output_item_id, function(finalRecip) {
+                                console.log('final recip',finalRecip);
                                 $scope.recipeList.push({
                                     price: theItem.sells.unit_price,
                                     quantity: quant,
                                     name: finalRecip.name,
-                                    prof: theItem.sells.unit_price - (quant * item.price)
+                                    prof: theItem.sells.unit_price - (quant * item.price),
+                                    id:finalRecip.id
                                 })
                                 if ($scope.recipeList.length == itemRecipePrices.length) {
                                     $scope.loading = false;
@@ -142,7 +141,6 @@ app.controller("gw2Controller", function($scope, $filter, $q) {
         }
     });
     $scope.quanFilt = function(itemQuant) {
-        console.log(itemQuant, typeof itemQuant, $scope.quantLim, typeof $scope.quantLim)
         if (itemQuant <= $scope.quantLim) {
             return true;
         } else {
