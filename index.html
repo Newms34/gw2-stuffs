@@ -49,6 +49,7 @@
                             <th class='info sortBut' ng-click='sortRec("price");' ng-class='{orderSel:sort=="price"}'>Price <span ng-if='sort=="price" && reverse'>&#9650;</span><span ng-if='sort=="price" && !reverse'>&#9660;</span></th>
                             <th class='info sortBut' ng-click='sortRec("quantity");' ng-class='{orderSel:sort=="quantity"}'>{{currItem.name}}s Required <span ng-if='sort=="quantity" && reverse'>&#9650;</span><span ng-if='sort=="quantity" && !reverse'>&#9660;</span></th>
                             <th class='info sortBut' ng-click='sortRec("prof");' ng-class='{orderSel:sort=="prof"}'>Profit (ignoring other item costs)<span ng-if='sort=="prof" && reverse'>&#9650;</span><span ng-if='sort=="prof" && !reverse'>&#9660;</span></th>
+                            <th class='info sortBut' ng-click='sortRec("disc");' ng-class='{orderSel:sort=="disc"}'>Crafting Discipline<span ng-if='sort=="disc" && reverse'>&#9650;</span><span ng-if='sort=="disc" && !reverse'>&#9660;</span></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -57,6 +58,7 @@
                             <td>{{recip.price|gw2Currency}}</td>
                             <td>{{recip.quantity}}</td>
                             <td>{{recip.prof|gw2Currency}}</td>
+                            <td style='font-size:x-large;'>{{recip.disc}}</td>
                         </tr>
                     </tbody>
                 </table>

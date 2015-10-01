@@ -67,6 +67,16 @@ app.controller("gw2Controller", function($scope, $filter, $q) {
     $.get('https://api.guildwars2.com/v2/quaggans/' + quag[Math.floor(Math.random() * quag.length)], function(theQuag) {
         $scope.whichQuag = theQuag.url;
     })
+    $scope.profSymbs = {
+        Armorsmith:'\u26E8',
+        Artificer:'\u269A',
+        Chef:'\u1F354',
+        Huntsman:'\u27B5',
+        Jeweler:'\u1F48E',
+        Leatherworker:'\uD83D\uDC04',
+        Tailor:'\u2702',
+        Weaponsmith:'\u2694',
+    }
     $scope.getRecipes = function(item) {
         $scope.recipeList = [];
         $scope.loading = true;
@@ -82,11 +92,13 @@ app.controller("gw2Controller", function($scope, $filter, $q) {
             });
             $q.all(promList).then(function(recipes) {
                 var recipeString = '';
+                console.log('recipes',recipes)
                 recipes.forEach(function(priceItem) {
                     recipeString += priceItem.output_item_id + ',';
                 })
                 recipeString = recipeString.substring(0, recipeString.length - 1);
                 $.get('https://api.guildwars2.com/v2/commerce/prices?ids=' + recipeString, function(itemRecipePrices) {
+                    console.log(itemRecipePrices)
                     itemRecipePrices.sort(function(a, b) {
                         if (a.sells.unit_price > b.sells.unit_price) {
                             return -1;
@@ -98,6 +110,7 @@ app.controller("gw2Controller", function($scope, $filter, $q) {
                     });
                     itemRecipePrices.forEach(function(theItem) {
                             var quant = 0;
+                            var disc='';
                             var whichRecipe = 0;
                             for (var n = 0; n < recipes.length; n++) {
                                 //loop thru and find the recipe this item belongs to 
@@ -107,18 +120,19 @@ app.controller("gw2Controller", function($scope, $filter, $q) {
                                         //loop the ingreds and find the original item
                                         if (recipes[n].ingredients[q].item_id == item.itId) {
                                             quant = parseInt(recipes[n].ingredients[q].count);
+                                            disc = recipes[n].disciplines[0];
                                         }
                                     }
                                 }
                             }
                             $.get('https://api.guildwars2.com/v2/items/' + recipes[whichRecipe].output_item_id, function(finalRecip) {
-                                console.log('final recip', finalRecip);
                                 $scope.recipeList.push({
                                         price: theItem.sells.unit_price,
                                         quantity: quant,
                                         name: finalRecip.name,
                                         prof: theItem.sells.unit_price - (quant * item.price),
-                                        id: finalRecip.id
+                                        id: finalRecip.id,
+                                        disc:$scope.profSymbs[disc]
                                     })
                                     //bar percent
                                 currPerc = 100 * ($scope.recipeList.length / itemRecipePrices.length);
