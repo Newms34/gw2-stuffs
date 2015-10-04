@@ -11,6 +11,7 @@ body {
 
 table {
     width: 90%;
+    transition-duration:1s;
 }
 
 .doUpg {
@@ -79,4 +80,5 @@ table {
 	height:19px;
 	position:relative;
 	left:0px;
+	transition-duration:.1s;
 }

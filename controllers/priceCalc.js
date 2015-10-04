@@ -67,16 +67,6 @@ app.controller("gw2Controller", function($scope, $filter, $q) {
     $.get('https://api.guildwars2.com/v2/quaggans/' + quag[Math.floor(Math.random() * quag.length)], function(theQuag) {
         $scope.whichQuag = theQuag.url;
     })
-    $scope.profSymbs = {
-        Armorsmith:'\u26E8',
-        Artificer:'\u269A',
-        Chef:'\u1F354',
-        Huntsman:'\u27B5',
-        Jeweler:'\u1F48E',
-        Leatherworker:'\uD83D\uDC04',
-        Tailor:'\u2702',
-        Weaponsmith:'\u2694',
-    }
     $scope.getRecipes = function(item) {
         $scope.recipeList = [];
         $scope.loading = true;
@@ -84,6 +74,10 @@ app.controller("gw2Controller", function($scope, $filter, $q) {
         $scope.currItem = item;
         var currPerc = 0;
         $('#loadBarPerc').css('width', '0%');
+        $('.panel-body table').css({
+            'filter': 'blur(5px)',
+            '-webkit-filter': 'blur(5px)'
+        });
         //now, get list of recipes from gw2 APi
         $.get('https://api.guildwars2.com/v2/recipes/search?input=' + item.itId, function(res) {
             var promList = [];
@@ -92,7 +86,7 @@ app.controller("gw2Controller", function($scope, $filter, $q) {
             });
             $q.all(promList).then(function(recipes) {
                 var recipeString = '';
-                console.log('recipes',recipes)
+                console.log('recipes', recipes)
                 recipes.forEach(function(priceItem) {
                     recipeString += priceItem.output_item_id + ',';
                 })
@@ -110,7 +104,7 @@ app.controller("gw2Controller", function($scope, $filter, $q) {
                     });
                     itemRecipePrices.forEach(function(theItem) {
                             var quant = 0;
-                            var disc='';
+                            var disc = '';
                             var whichRecipe = 0;
                             for (var n = 0; n < recipes.length; n++) {
                                 //loop thru and find the recipe this item belongs to 
@@ -132,7 +126,7 @@ app.controller("gw2Controller", function($scope, $filter, $q) {
                                         name: finalRecip.name,
                                         prof: theItem.sells.unit_price - (quant * item.price),
                                         id: finalRecip.id,
-                                        disc:$scope.profSymbs[disc]
+                                        disc: disc
                                     })
                                     //bar percent
                                 currPerc = 100 * ($scope.recipeList.length / itemRecipePrices.length);
@@ -143,6 +137,10 @@ app.controller("gw2Controller", function($scope, $filter, $q) {
 
                                 if ($scope.recipeList.length == itemRecipePrices.length) {
                                     $scope.loading = false;
+                                    $('.panel-body table').css({
+                                        'filter': 'blur(0px)',
+                                        '-webkit-filter': 'blur(0px)'
+                                    });
                                     $.get('https://api.guildwars2.com/v2/quaggans/' + quag[Math.floor(Math.random() * quag.length)], function(theQuag) {
                                         $scope.whichQuag = theQuag.url;
                                     })
