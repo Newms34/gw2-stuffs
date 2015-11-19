@@ -25,7 +25,7 @@ app.controller("gw2Controller", function($scope, $filter, $q) {
     $scope.quantLim = 500;
     $scope.refreshPrices = function() {
         var priceObj = {};
-        $.getJSON('https://api.guildwars2.com/v2/commerce/prices?ids=24329,24330,24324,24325,24339,24340,24334,24335,24304,24305,24309,24310,24314,24315,24319,24320', function(data) {
+        $.getJSON('https://api.guildwars2.com/v2/commerce/prices?ids=24329,24330,24324,24325,24339,24340,24334,24335,24304,24305,24309,24310,24314,24315,24319,24320,70842,68942', function(data) {
             data.forEach(function(el) {
                 priceObj[el.id] = {
                     name: '',
@@ -36,7 +36,7 @@ app.controller("gw2Controller", function($scope, $filter, $q) {
                 };
             })
             $.get('https://api.guildwars2.com/v2/commerce/prices?ids=24277', function(dustPrice) {
-                $.getJSON('https://api.guildwars2.com/v2/items?ids=24329,24330,24324,24325,24339,24340,24334,24335,24304,24305,24309,24310,24314,24315,24319,24320', function(data) {
+                $.getJSON('https://api.guildwars2.com/v2/items?ids=24329,24330,24324,24325,24339,24340,24334,24335,24304,24305,24309,24310,24314,24315,24319,24320,70842,68942', function(data) {
                     data.forEach(function(el) {
                         priceObj[el.id].name = el.name;
                         priceObj[el.id].pic = el.icon;
