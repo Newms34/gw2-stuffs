@@ -72,6 +72,7 @@ app.controller("gw2Controller", function($scope, $filter, $q) {
         $scope.loading = true;
         $scope.recipeShow = true;
         $scope.currItem = item;
+        $scope.devs = [];
         var currPerc = 0;
         $('#loadBarPerc').css('width', '0%');
         $('.panel-body table').css({
@@ -103,56 +104,57 @@ app.controller("gw2Controller", function($scope, $filter, $q) {
                         }
                     });
                     itemRecipePrices.forEach(function(theItem) {
-                            var quant = 0;
-                            var disc = '';
-                            var whichRecipe = 0;
-                            for (var n = 0; n < recipes.length; n++) {
-                                //loop thru and find the recipe this item belongs to 
-                                if (recipes[n].output_item_id == theItem.id) {
-                                    whichRecipe = n;
-                                    for (var q = 0; q < recipes[n].ingredients.length; q++) {
-                                        //loop the ingreds and find the original item
-                                        if (recipes[n].ingredients[q].item_id == item.itId) {
-                                            quant = parseInt(recipes[n].ingredients[q].count);
-                                            disc = recipes[n].disciplines[0];
-                                        }
+                        var quant = 0;
+                        var disc = '';
+                        var whichRecipe = 0;
+                        for (var n = 0; n < recipes.length; n++) {
+                            //loop thru and find the recipe this item belongs to 
+                            if (recipes[n].output_item_id == theItem.id) {
+                                whichRecipe = n;
+                                for (var q = 0; q < recipes[n].ingredients.length; q++) {
+                                    //loop the ingreds and find the original item
+                                    if (recipes[n].ingredients[q].item_id == item.itId) {
+                                        quant = parseInt(recipes[n].ingredients[q].count);
+                                        disc = recipes[n].disciplines[0];
                                     }
                                 }
                             }
-                            $.get('https://api.guildwars2.com/v2/items/' + recipes[whichRecipe].output_item_id, function(finalRecip) {
-                                $scope.recipeList.push({
-                                        price: theItem.sells.unit_price,
-                                        quantity: quant,
-                                        name: finalRecip.name,
-                                        prof: theItem.sells.unit_price - (quant * item.price),
-                                        id: finalRecip.id,
-                                        disc: disc
-                                    })
-                                    //bar percent
-                                currPerc = 100 * ($scope.recipeList.length / itemRecipePrices.length);
-                                $('#loadBarPerc').css({
-                                    'width': currPerc + '%',
-                                    'background-color': 'hsl(0,100%,' + currPerc / 2 + '%)'
-                                });
+                        }
 
-                                if ($scope.recipeList.length == itemRecipePrices.length) {
-                                    $scope.loading = false;
-                                    $('.panel-body table').css({
-                                        'filter': 'blur(0px)',
-                                        '-webkit-filter': 'blur(0px)'
-                                    });
-                                    $.get('https://api.guildwars2.com/v2/quaggans/' + quag[Math.floor(Math.random() * quag.length)], function(theQuag) {
-                                        $scope.whichQuag = theQuag.url;
-                                    })
-                                }
-                                $scope.$digest();
+                        $.get('https://api.guildwars2.com/v2/items/' + recipes[whichRecipe].output_item_id, function(finalRecip) {
+                            var highSell = theItem.sells.unit_price - (quant * item.price),//high price
+                                lowSell = theItem.buys.unit_price - (quant * item.price);//low price
+                                
+                            $scope.recipeList.push({
+                                price: theItem.sells.unit_price,
+                                quantity: quant,
+                                name: finalRecip.name,
+                                prof: highSell,
+                                lowProf:lowSell,
+                                avg:(highSell+lowSell)/2,
+                                id: finalRecip.id,
+                                disc: disc,
+                                percDev:parseInt(100*Math.abs(highSell-((highSell+lowSell)/2))/Math.abs((highSell+lowSell)/2))
                             })
+                            currPerc = 100 * ($scope.recipeList.length / itemRecipePrices.length);
+                            $('#loadBarPerc').css({
+                                'width': currPerc + '%',
+                                'background-color': 'hsl(0,100%,' + currPerc / 2 + '%)'
+                            });
+
+                            if ($scope.recipeList.length == itemRecipePrices.length) {
+                                $scope.loading = false;
+                                $('.panel-body table').css({
+                                    'filter': 'blur(0px)',
+                                    '-webkit-filter': 'blur(0px)'
+                                });
+                                $.get('https://api.guildwars2.com/v2/quaggans/' + quag[Math.floor(Math.random() * quag.length)], function(theQuag) {
+                                    $scope.whichQuag = theQuag.url;
+                                })
+                            }
+                            $scope.$digest();
                         })
-                        /*for every item obtained in the itemRecipePrices list, we need to construct an object with:
-                        itemPrice: itemRecipeList[i].sells.unit_price
-                        quantity: corresponding quantity from recipes
-                        name: name of item (need another get?)
-                        */
+                    })
                 })
             })
         })

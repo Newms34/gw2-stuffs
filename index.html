@@ -48,7 +48,10 @@
                             <th class='info sortBut' ng-click='sortRec("name");' ng-class='{orderSel:sort=="name"}'>Recipe Produces <span ng-if='sort=="name" && reverse'>&#9650;</span><span ng-if='sort=="name" && !reverse'>&#9660;</span></th>
                             <th class='info sortBut' ng-click='sortRec("price");' ng-class='{orderSel:sort=="price"}'>Price <span ng-if='sort=="price" && reverse'>&#9650;</span><span ng-if='sort=="price" && !reverse'>&#9660;</span></th>
                             <th class='info sortBut' ng-click='sortRec("quantity");' ng-class='{orderSel:sort=="quantity"}'>{{currItem.name}}s Required <span ng-if='sort=="quantity" && reverse'>&#9650;</span><span ng-if='sort=="quantity" && !reverse'>&#9660;</span></th>
-                            <th class='info sortBut' ng-click='sortRec("prof");' ng-class='{orderSel:sort=="prof"}'>Profit (ignoring other item costs)<span ng-if='sort=="prof" && reverse'>&#9650;</span><span ng-if='sort=="prof" && !reverse'>&#9660;</span></th>
+                            <th class='info sortBut' ng-click='sortRec("lowProf");' ng-class='{orderSel:sort=="lowProf"}'>Low Sell Price (ignoring other item costs)<span ng-if='sort=="lowProf" && reverse'>&#9650;</span><span ng-if='sort=="lowProf" && !reverse'>&#9660;</span></th>
+                            <th class='info sortBut' ng-click='sortRec("avg");' ng-class='{orderSel:sort=="avg"}'>Average Sell Price (ignoring other item costs)<span ng-if='sort=="avg" && reverse'>&#9650;</span><span ng-if='sort=="avg" && !reverse'>&#9660;</span></th>
+                            <th class='info sortBut' ng-click='sortRec("prof");' ng-class='{orderSel:sort=="prof"}'>High Sell Price (ignoring other item costs)<span ng-if='sort=="prof" && reverse'>&#9650;</span><span ng-if='sort=="prof" && !reverse'>&#9660;</span></th>
+                            <th class='info sortBut' ng-click='sortRec("percDev");' ng-class='{orderSel:sort=="percDev"}' title = 'Generally speaking, a lower percent deviation is better, as it indicates a more reliable item pricing'>Percent deviation from Average(ignoring other item costs)<span ng-if='sort=="percDev" && reverse'>&#9650;</span><span ng-if='sort=="percDev" && !reverse'>&#9660;</span></th>
                             <th class='info sortBut' ng-click='sortRec("disc");' ng-class='{orderSel:sort=="disc"}'>Crafting Discipline<span ng-if='sort=="disc" && reverse'>&#9650;</span><span ng-if='sort=="disc" && !reverse'>&#9660;</span></th>
                         </tr>
                     </thead>
@@ -57,7 +60,10 @@
                             <td><a href='http://www.gw2spidy.com/item/{{recip.id}}' target='_blank' title='View {{recip.name}} on Gw2Spidy.com'>{{recip.name}}</a></td>
                             <td>{{recip.price|gw2Currency}}</td>
                             <td>{{recip.quantity}}</td>
+                            <td>{{recip.lowProf|gw2Currency}}</td>
+                            <td>{{recip.avg|gw2Currency}}</td>
                             <td>{{recip.prof|gw2Currency}}</td>
+                            <td>{{recip.percDev}}%</td>
                             <td>{{recip.disc}}</td>
                         </tr>
                     </tbody>
@@ -71,8 +77,8 @@
             </div>
         </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
     <script src='https://code.jquery.com/ui/1.11.4/jquery-ui.min.js' /></script>
     <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>
     <script src="./controllers/priceCalc.js"></script>
