@@ -35,7 +35,7 @@
         <button ng-click='refreshPrices();'>Refresh Price List</button>
         <br/>
         <button ng-click='alertMe(priceFull);'>Price Full</button>
-        <div id='recipePanel' class='panel panel-primary draggable col-md-6' ng-show='recipeShow'>
+        <div id='recipePanel' class='panel panel-primary draggable col-md-6' ng-show='recipeShow' ng-class='{"solid-rec":loading==true}'>
             <div class='panel-heading'>Recipes for {{currItem.name}}
                 <div class='btn btn-danger pull-right' ng-click='recipeShow=false'>X</div>
             </div>

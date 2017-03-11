@@ -33,11 +33,16 @@ table {
     top: 100px;
     overflow: scroll;
     height: 90vh;
+    transition-duration:.5s;
+    opacity:.3;
 }
 
 #recipePanel:hover {
     box-shadow: 1px 1px 6px #000;
-    
+    opacity:1;
+}
+.solid-rec{
+    opacity:1!important;
 }
 
 .sortBut {
