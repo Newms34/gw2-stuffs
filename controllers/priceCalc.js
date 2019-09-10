@@ -3,8 +3,8 @@ var app = angular.module("gw2pricer", []);
 
 app.filter('gw2Currency', function() {
     return function(price) {
-        var priceStr = price.toString();
-        var priceArr = priceStr.split(''); //split price into array and add 'c' (copper) to end
+        const priceStr = price.toString();
+        const priceArr = priceStr.split(''); //split price into array and add 'c' (copper) to end
         priceArr.push('c');
         if (priceStr.length > 2) {
             //greater than 1 s
